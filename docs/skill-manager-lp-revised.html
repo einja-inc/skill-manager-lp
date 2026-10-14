@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Skill Managerは、チームのSkillを見渡し、AIの仕事の流れを組み立て、組織のルールに沿って運用するための管理基盤です。">
+  <title>Skill Manager | LPワイヤーフレーム改訂案</title>
+  <style>
+    :root{--ink:#181925;--muted:#666;--blue:#6c3bff;--blue-dark:#3f238d;--lilac:#eeedfe;--peach:#fcece6;--mint:#e1f5ef;--sky:#e3eff8;--line:#e6e8f2;--surface:#fff;--soft:#fafafc;--shadow:0 18px 50px rgba(33,30,68,.07);--display:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;--field:linear-gradient(90deg,#f5e1ea 0%,#e9e5f8 36%,#e3eff8 70%,#e1f5ef 100%)}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:82px}
+    body{margin:0;color:var(--ink);background:#fff;font-family:Inter,"Noto Sans JP","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;line-height:1.7}
+    h1,h2,h3,h4,p,figure{margin:0}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    .wrap{width:min(1120px,calc(100% - 48px));margin-inline:auto}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+    .eyebrow::before{content:"";width:18px;height:2px;background:currentColor}
+    .muted{color:var(--muted)}
+    .section{padding:112px 0;border-top:1px solid var(--line)}
+    .section.soft{background:var(--soft)}
+    .section-head{max-width:780px;margin-bottom:42px}
+    .section-head h2{font-size:clamp(30px,3.8vw,52px);line-height:1.35;letter-spacing:-.04em;margin-top:14px}
+    .section-head p{font-size:17px;color:var(--muted);margin-top:18px}
+    .section-note{color:var(--muted);font-size:12px;margin-top:24px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:11px 20px;border-radius:11px;font-weight:800;font-size:14px;border:1px solid var(--line);background:#fff;transition:transform .2s,box-shadow .2s}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(49,59,117,.12)}
+    .btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+    .btn.primary:hover{background:var(--blue-dark)}
+    .btn .arrow{font-size:18px;line-height:1}
+    .nav{height:72px;background:rgba(255,255,255,.94);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10;backdrop-filter:blur(14px)}
+    .nav-inner{height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:900;white-space:nowrap}
+    .brand-mark{width:29px;height:29px;border-radius:8px;background:linear-gradient(135deg,#2c3aa8 10%,#755fe2 70%,#b7a1f8);transform:rotate(14deg);display:inline-block;position:relative}
+    .brand-mark::after{content:"✦";color:#fff;position:absolute;inset:0;display:grid;place-items:center;transform:rotate(-14deg);font-size:20px}
+    .nav-links{display:flex;align-items:center;gap:30px;font-size:13px;font-weight:700;color:var(--muted)}
+    .nav-links a:hover{color:var(--blue)}
+    .mobile-nav{display:none;position:relative}
+    .mobile-nav summary{list-style:none;cursor:pointer;width:38px;height:38px;border:1px solid var(--line);border-radius:9px;display:grid;place-items:center;background:#fff;color:var(--blue);font-size:20px;line-height:1}
+    .mobile-nav summary::-webkit-details-marker{display:none}
+    .mobile-nav nav{position:absolute;right:0;top:45px;min-width:190px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:9px;display:grid;gap:3px}
+    .mobile-nav nav a{font-size:13px;font-weight:700;padding:8px 10px;border-radius:6px}
+    .mobile-nav nav a:hover{background:var(--lilac)}
+    .nav-actions{display:flex;align-items:center;gap:8px}
+    .nav .btn{min-height:39px;padding:7px 14px;font-size:12px}
+    .hero{overflow:hidden;padding:82px 0 96px;background:linear-gradient(150deg,#f8e9ee 0%,#f0edff 35%,#e7f3fb 68%,#e9f8ef 100%);position:relative}
+    .hero::after{content:"";position:absolute;width:700px;height:700px;right:-340px;top:-350px;border:1px solid rgba(91,101,190,.14);border-radius:50%;box-shadow:0 0 0 70px rgba(255,255,255,.07),0 0 0 140px rgba(255,255,255,.05);pointer-events:none}
+    .hero-copy{text-align:center;position:relative;z-index:1}
+    .hero .eyebrow{justify-content:center}
+    .hero h1{max-width:1040px;margin:16px auto 0;font-size:clamp(37px,5.6vw,78px);line-height:1.25;letter-spacing:-.055em;font-weight:900}
+    .hero h1 span{background:linear-gradient(95deg,#384fc5,#9365d4 52%,#e48f70);background-clip:text;color:transparent}
+    .hero-lead{font-size:clamp(15px,1.8vw,19px);max-width:790px;margin:24px auto 0;color:#425070}
+    .hero-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:28px}
+    .hero-demo{margin-top:62px;position:relative;z-index:1;box-shadow:0 35px 90px rgba(65,72,145,.2)}
+    .app-window{border:1px solid #d5daf0;border-radius:20px;background:#fff;overflow:hidden;box-shadow:var(--shadow)}
+    .app-top{height:41px;background:#fafbfe;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:7px;padding:0 16px}
+    .app-dot{width:8px;height:8px;border-radius:50%;background:#d4d8e6}
+    .app-top strong{margin-left:16px;font-size:11px;color:#59637f;letter-spacing:.03em}
+    .app-shell{display:grid;grid-template-columns:190px minmax(0,1fr);min-height:420px}
+    .app-side{background:#f7f8fd;border-right:1px solid var(--line);padding:22px 14px}
+    .app-side .side-title{font-size:10px;color:#9ca5bb;letter-spacing:.1em;margin:0 9px 12px}
+    .app-side div.item{padding:9px 10px;border-radius:8px;font-size:12px;color:#65708c;margin-bottom:4px}
+    .app-side div.item.active{background:#e9eafd;color:var(--blue-dark);font-weight:800}
+    .app-content{padding:28px;min-width:0}
+    .app-content-header{display:flex;justify-content:space-between;gap:16px;align-items:start;margin-bottom:24px}
+    .app-content-header h3{font-size:19px}
+    .app-content-header p{font-size:11px;color:#8390a8}
+    .demo-pill{font-size:10px;color:#2d715c;background:#e6f6ee;padding:4px 8px;border-radius:99px;font-weight:700;white-space:nowrap}
+    .hero-preview-grid{display:grid;grid-template-columns:1fr 1.2fr .85fr;gap:12px;min-height:260px}
+    .preview-panel{background:#fff;border:1px solid var(--line);border-radius:13px;padding:17px;min-width:0}
+    .preview-panel h4{font-size:12px;margin-bottom:11px}
+    .preview-sub{font-size:10px;color:#8a94aa;margin-bottom:10px}
+    .map-mini{height:157px;background:radial-gradient(circle at 24% 25%,#fff1e8,transparent 28%),radial-gradient(circle at 70% 57%,#ededff,transparent 39%),#fbfbff;border-radius:9px;position:relative;overflow:hidden}
+    .map-mini::before,.map-mini::after{content:"";position:absolute;width:120px;height:1px;background:#c8c8e8;transform:rotate(-27deg);top:73px;left:39px}
+    .map-mini::after{transform:rotate(33deg);top:92px;left:47px}
+    .map-mini b{position:absolute;font-size:9px;font-weight:700;color:#444d79;border:1px solid #d8daf2;background:#fff;padding:5px 6px;border-radius:99px;white-space:nowrap}
+    .map-mini b:nth-child(1){top:18px;left:13px}.map-mini b:nth-child(2){top:58px;right:12px}.map-mini b:nth-child(3){bottom:22px;left:27px}.map-mini b:nth-child(4){bottom:18px;right:13px}
+    .mini-flow{display:flex;align-items:center;gap:4px;margin-top:18px;overflow:hidden}
+    .mini-flow span{background:#eef1fc;color:#485595;border-radius:7px;padding:9px 6px;font-size:10px;text-align:center;flex:1;line-height:1.35}
+    .mini-flow span:nth-of-type(2){background:#fff0e7;color:#a46238}.mini-flow span:nth-of-type(3){background:#e9f7f2;color:#387a68}
+    .mini-flow i{color:#9aa4bf;font-style:normal;font-size:14px}
+    .approval-list{font-size:10px;color:#59657f;display:grid;gap:9px}
+    .approval-list div{display:flex;align-items:center;gap:7px;border-bottom:1px solid #eef0f7;padding-bottom:7px}
+    .approval-list em{width:7px;height:7px;border-radius:50%;background:#8d7be0;flex:none}
+    .approval-list div:nth-child(2) em{background:#f0a271}.approval-list div:nth-child(3) em{background:#76bba2}
+    .demo-caption{font-size:11px;color:#64718f;margin-top:12px;text-align:center}
+    .asset-compare{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .asset-panel{border:1px solid #cad1e2;border-radius:17px;overflow:hidden;background:#f1f3f9;min-width:0}
+    .asset-panel.future{border-color:#d0ccff;background:#f1efff}
+    .asset-panel-head{padding:14px 18px;background:#e5e8f1}
+    .asset-panel.future .asset-panel-head{background:#4139d9;color:#fff}
+    .asset-panel-head span{display:block;font-size:11px;font-weight:900;letter-spacing:.08em;color:#73809e}
+    .asset-panel.future .asset-panel-head span{color:#d9d6ff}
+    .asset-panel-head h3{font-size:clamp(17px,2vw,22px);line-height:1.4;margin-top:4px}
+    .asset-panel-body{padding:15px;display:grid;gap:12px}
+    .asset-diagram{height:292px;border:1px dashed #cbd3e4;border-radius:10px;background:#fff;position:relative;padding:16px;display:flex;flex-direction:column;justify-content:center}
+    .asset-panel.future .asset-diagram{border-style:solid;border-color:#d5d2ff}
+    .asset-person{background:#fff;border:1px solid #cdd5e5;border-radius:10px;padding:9px 6px;text-align:center;min-width:0;line-height:1.35}
+    .asset-person b{display:block;font-size:13px}.asset-person small{display:block;color:#8390a9;font-size:10px;margin-top:3px}
+    .asset-origin{width:50%;margin:0 auto;position:relative}
+    .asset-origin::after{content:"";position:absolute;left:50%;top:100%;height:15px;border-left:1px solid #c6cfdf}
+    .asset-route-labels,.asset-members{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;text-align:center}
+    .asset-route-labels{margin:15px 0 9px;padding-top:6px;color:#8e9ab2;font-size:10px;position:relative}
+    .asset-route-labels::before{content:"";position:absolute;top:0;left:17%;right:17%;border-top:1px solid #c6cfdf}
+    .asset-route-labels span::before{content:"↓";display:block;font-size:18px;line-height:1;color:#b5bfd1}
+    .asset-person.missing{background:#f2f4f9;border-style:dashed;color:#8491a9}
+    .asset-disconnect{text-align:center;color:#8895ad;font-size:10px;margin-top:14px;padding-top:9px;border-top:1px dashed #d4dbe9}
+    .asset-network{display:grid;grid-template-columns:minmax(0,1fr) 34px minmax(0,1.45fr) 34px minmax(0,1fr);align-items:center;gap:3px}
+    .asset-arrow{text-align:center;color:#453bdf;font-size:20px;font-weight:900;line-height:1}
+    .asset-arrow small{display:block;font-size:9px;font-weight:800;line-height:1.25;white-space:nowrap}
+    .asset-arrow .mobile-arrow{display:none}
+    .asset-hub{min-width:0;background:#4239de;color:#fff;border-radius:12px;padding:18px 6px;text-align:center;box-shadow:0 10px 22px rgba(64,54,212,.16)}
+    .asset-hub b{display:block;font-size:16px}.asset-hub small{display:block;font-size:10px;color:#dfdcff}
+    .asset-chips{display:flex;gap:4px;justify-content:center;margin-top:9px}
+    .asset-chips span{font-size:9px;padding:3px 6px;border-radius:5px;background:#716af0}
+    .asset-reuse{margin-top:22px;align-self:center;text-align:center;color:#453bdf;font-size:11px;font-weight:800}
+    .asset-reuse .asset-person{margin-top:5px;min-width:140px;color:var(--ink)}
+    .asset-callouts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .asset-callouts div{background:#fff;border:1px solid #dce1ed;border-radius:9px;padding:11px;font-size:11px;color:#65728d;line-height:1.55}
+    .asset-panel.future .asset-callouts div{border-color:#d8d4ff}
+    .asset-callouts b{display:block;color:#44506b;font-size:12px;margin-bottom:3px}
+    .asset-panel.future .asset-callouts b{color:#4139d9}
+    .asset-summary{border-radius:9px;padding:12px 13px;background:#e0e5f0;color:#47536e;font-size:12px;font-weight:800;line-height:1.6}
+    .asset-panel.future .asset-summary{background:#4139d9;color:#fff}
+    .asset-benefits{margin-top:22px;padding:18px;border:1px solid #a9e4ed;border-radius:18px;background:linear-gradient(110deg,#effcff,#f7fcff)}
+    .asset-benefits h3{margin:0 0 12px;text-align:center;color:#116b82;font-size:13px;font-weight:800}
+    .asset-benefits ul{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px;padding:0;margin:0;list-style:none}
+    .asset-benefits li{display:flex;align-items:center;gap:10px;min-height:66px;padding:11px 12px;border:1px solid #c9e8f0;border-radius:12px;background:#fff;color:#173956;font-size:12px;font-weight:700;line-height:1.45}
+    .asset-benefits li span{width:34px;height:34px;flex:none;display:grid;place-items:center;border-radius:50%;background:linear-gradient(135deg,#19cad6,#0097ad);color:#fff;font-size:17px;font-weight:800}
+    .asset-benefits li svg{width:19px;height:19px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .feature-index{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}
+    .feature-index a{border:1px solid var(--line);background:#fff;border-radius:12px;padding:14px 16px;display:flex;gap:10px;align-items:center;font-size:13px;font-weight:800}
+    .feature-index a:hover{border-color:var(--blue);color:var(--blue)}
+    .feature-index span{font-size:11px;color:var(--blue)}
+    .feature{display:grid;grid-template-columns:1fr 1.06fr;gap:54px;align-items:center;padding:70px 0;border-top:1px solid var(--line)}
+    .feature.reverse .feature-copy{order:2}.feature.reverse .feature-visual{order:1}
+    .feature-copy .number{font-size:12px;color:var(--blue);font-weight:900;letter-spacing:.12em}
+    .feature-copy h3{font-size:clamp(27px,3.1vw,42px);line-height:1.32;letter-spacing:-.04em;margin-top:13px}
+    .feature-copy .one-line{margin-top:14px;font-size:18px;font-weight:800;color:#4353a7}
+    .feature-copy p{margin-top:17px;color:var(--muted);font-size:15px}
+    .before-after{display:grid;gap:9px;margin-top:25px;font-size:13px}
+    .before-after div{display:flex;gap:9px;align-items:start}
+    .before-after b{min-width:58px;text-transform:uppercase;font-size:10px;letter-spacing:.04em;border-radius:5px;padding:4px 6px;text-align:center;background:#f4e7e2;color:#925f4a}
+    .before-after div:last-child b{background:#e8f3ef;color:#3c826d}
+    .feature-visual{border:1px solid #dde1ef;border-radius:24px;background:linear-gradient(135deg,#f3edff,#f6fbff);padding:28px;box-shadow:var(--shadow);min-width:0}
+    .visual-window{border:1px solid #dfe3ee;border-radius:13px;background:#fff;box-shadow:0 14px 35px rgba(52,62,128,.12);overflow:hidden}
+    .visual-bar{height:35px;padding:0 12px;background:#fafbff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;font-size:10px;color:#8e97ae}
+    .visual-bar strong{font-size:10px;color:#46517d}
+    .visual-inner{padding:18px;min-height:286px}
+    .visual-inner .filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:11px}
+    .visual-inner .filter-row span{border:1px solid #dfe3f1;border-radius:99px;padding:4px 8px;font-size:9px;color:#6a7592}
+    .map-large{height:221px;border-radius:9px;background:radial-gradient(circle at 25% 25%,#fff2e9 0 10%,transparent 28%),radial-gradient(circle at 70% 55%,#ecebff 0 16%,transparent 34%),#fbfcff;position:relative;overflow:hidden}
+    .map-line{position:absolute;height:1px;background:#bfc3e9;transform-origin:left center}
+    .map-line.a{width:46%;top:44%;left:19%;transform:rotate(12deg)}.map-line.b{width:41%;top:59%;left:19%;transform:rotate(-20deg)}.map-line.c{width:30%;top:47%;left:53%;transform:rotate(28deg)}
+    .map-node{position:absolute;padding:5px 10px;border-radius:99px;background:#fff;border:1px solid #d9dcf4;box-shadow:0 3px 11px rgba(63,68,126,.08);color:#404d8c;font-size:10px;font-weight:800;white-space:nowrap}
+    .map-node.a{top:16%;left:8%}.map-node.b{top:38%;left:33%}.map-node.c{top:68%;left:15%}.map-node.d{top:27%;right:8%}.map-node.e{bottom:18%;right:12%}
+    .visual-help{font-size:10px;color:#8490ac;margin-top:8px}
+    .graph-flow{display:grid;gap:6px;padding:10px 2px}
+    .graph-row{display:flex;align-items:center;gap:5px}
+    .graph-row .graph-node{flex:1;min-width:0}
+    .graph-arrow{color:#7885ba;font-size:16px;font-weight:900;flex:none}
+    .graph-down{text-align:center;color:#7885ba;font-size:18px;line-height:1}
+    .graph-branches{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .graph-branches .graph-node{min-height:52px}
+    .graph-node{min-height:65px;border-radius:12px;border:1px solid #d8dcf2;display:grid;place-items:center;text-align:center;font-size:10px;font-weight:800;line-height:1.45;background:#f6f6ff;padding:7px}
+    .graph-node.orange{background:#fff1e8;border-color:#f1dac8}.graph-node.green{background:#ebf8f2;border-color:#cfebdb}
+    .graph-label{text-align:center;color:#7d89a4;font-size:10px}
+    .harness-table{width:100%;border-collapse:collapse;font-size:11px}
+    .harness-table th,.harness-table td{padding:10px 7px;border-bottom:1px solid #e9ebf3;text-align:left}
+    .harness-table th{color:#7a859f;font-weight:700;background:#fbfbfe}
+    .harness-table td:first-child{font-weight:700}
+    .check{color:#27916c;font-weight:900}.dash{color:#b3b7ca}
+    .policy-row{margin-top:17px;background:#f7f6ff;border:1px solid #e8e7fb;border-radius:9px;padding:11px 12px;font-size:10px;color:#576288}
+    .policy-row strong{display:block;color:var(--blue-dark);margin-bottom:4px}
+    .support-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .support-card{border:1px solid var(--line);border-radius:17px;background:#fff;padding:24px;min-height:225px}
+    .support-icon{width:35px;height:35px;border-radius:10px;display:grid;place-items:center;background:var(--lilac);color:var(--blue);font-size:17px;font-weight:900;margin-bottom:16px}
+    .support-card:nth-child(3n+2) .support-icon{background:var(--peach);color:#c47750}.support-card:nth-child(3n+3) .support-icon{background:var(--mint);color:#368871}
+    .support-card h3{font-size:17px;margin-bottom:7px}.support-card p{font-size:13px;color:var(--muted)}
+    .support-card small{display:block;margin-top:15px;color:#8590a8;font-size:10px}
+    .case-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:17px}
+    .case-tabs button{cursor:pointer;background:#fff;border:1px solid var(--line);border-radius:99px;padding:8px 16px;color:#64708b;font-weight:800;font-size:13px}
+    .case-tabs button[aria-selected="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+    .case-panel{border:1px solid #dfe2f0;border-radius:20px;background:#fff;padding:30px;box-shadow:var(--shadow)}
+    .case-panel[hidden]{display:none}
+    .case-panel h3{font-size:23px;margin-bottom:8px}
+    .case-panel>p{color:var(--muted);font-size:14px;margin-bottom:28px}
+    .work-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .work-step{position:relative;padding:18px;border:1px solid #dfe3f0;border-radius:13px;background:#fbfbff;min-height:175px}
+    .work-step:nth-child(2){background:#f5f2ff}.work-step:nth-child(3){background:#ecf8f3}.work-step:nth-child(4){background:#edf5ff}
+    .work-step:not(:last-child)::after{content:"→";position:absolute;right:-17px;top:44%;z-index:2;font-size:22px;font-weight:900;color:#7180b6;background:#fff;border-radius:50%;line-height:1}
+    .work-step .step-no{font-size:10px;color:var(--blue);font-weight:900;letter-spacing:.09em}
+    .work-step h4{font-size:15px;line-height:1.4;margin:14px 0 7px}.work-step p{font-size:12px;color:#62708a;line-height:1.6}
+    .case-outcome{margin-top:20px;display:flex;gap:10px;align-items:start;color:#3b6c5d;font-size:13px;font-weight:800}
+    .case-outcome::before{content:"✓";display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:#dff3e8;flex:none}
+    .governance-diagram{background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);border-radius:22px;padding:32px}
+    .governance-lanes{display:grid;grid-template-columns:170px 1fr;gap:14px}
+    .lane-name{background:#f2f3fb;border-radius:10px;padding:17px;display:flex;flex-direction:column;justify-content:center;font-size:13px;font-weight:900;color:#435293}
+    .lane-name small{font-size:11px;font-weight:400;color:#75809a}
+    .lane-flow{display:flex;align-items:stretch;gap:8px;min-width:0}
+    .lane-box{flex:1;min-width:0;border:1px solid #dfe3ef;border-radius:10px;padding:14px;background:#fbfcff;font-size:12px;font-weight:800;line-height:1.45}
+    .lane-box small{display:block;font-weight:400;color:#75809b;font-size:10px;margin-top:7px}
+    .lane-flow .flow-arrow{align-self:center;color:#8791b1;font-weight:900}
+    .lane-box.ai{background:#f4f3ff;border-color:#e2dffd}.lane-box.human{background:#eaf8f1;border-color:#d5eddf}.lane-box.alert{background:#fff3eb;border-color:#f5dfd0}
+    .diagram-divider{height:23px;margin:10px 0 10px 184px;border-left:2px dashed #cbd0e6}
+    .governance-callout{background:#f4f5fd;border-radius:12px;margin-top:22px;padding:16px 18px;color:#526080;font-size:12px}
+    .start-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .start-step{padding:21px;border:1px solid var(--line);border-radius:14px;background:#fff}
+    .start-step b{display:block;color:var(--blue);font-size:12px;margin-bottom:18px}.start-step h3{font-size:15px;margin-bottom:8px}.start-step p{font-size:12px;color:var(--muted)}
+    .price-card{display:flex;justify-content:space-between;gap:20px;align-items:center;padding:32px;border:1px solid var(--line);border-radius:18px;background:#fff}
+    .price-card h3{font-size:19px}.price-card p{color:var(--muted);font-size:13px;margin-top:5px}
+    .price-card strong{font-size:37px;line-height:1;white-space:nowrap}.price-card strong small{font-size:13px;color:var(--muted);font-weight:600}
+    .faq-list{border-top:1px solid var(--line)}
+    .faq-list details{border-bottom:1px solid var(--line);padding:17px 0}
+    .faq-list summary{font-weight:800;cursor:pointer;list-style:none;padding-right:20px;position:relative}
+    .faq-list summary::after{content:"+";position:absolute;right:0;top:0;color:var(--blue);font-size:20px;line-height:1}
+    .faq-list details[open] summary::after{content:"−"}
+    .faq-list p{font-size:13px;color:var(--muted);margin-top:10px}
+    .contact{background:linear-gradient(135deg,#29368d,#5352b3 55%,#8668c7);color:#fff;padding:92px 0;text-align:center}
+    .contact h2{font-size:clamp(31px,4vw,56px);line-height:1.3;letter-spacing:-.04em}
+    .contact p{margin:18px auto 0;color:#e1e5ff;max-width:650px}
+    .contact .btn{margin-top:28px;color:var(--blue-dark);border:0}
+    .contact-note{font-size:11px!important;color:#c8cef5!important}
+    footer{padding:31px 0;background:#f8f9fd;color:#7a849b;font-size:11px}
+    footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    @media(max-width:900px){.nav-links{display:none}.asset-compare{grid-template-columns:1fr}.mobile-nav{display:block}.hero-preview-grid{grid-template-columns:1fr 1fr}.hero-preview-grid .preview-panel:last-child{grid-column:1/3}.feature{gap:25px}.support-grid{grid-template-columns:repeat(2,1fr)}.work-step{min-height:190px}.governance-lanes{grid-template-columns:125px 1fr}.diagram-divider{margin-left:139px}}
+    @media(max-width:680px){.wrap{width:min(100% - 30px,1120px)}html{scroll-padding-top:119px}.nav{height:111px}.nav-inner{flex-wrap:wrap;gap:7px;align-content:center}.brand{font-size:15px;margin-right:auto}.mobile-nav{order:2}.nav-actions{order:3;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px}.nav .btn{font-size:11px;width:100%}.hero{padding:58px 0 66px}.hero h1{font-size:clamp(33px,9vw,49px)}.hero-lead{font-size:14px}.hero-demo{margin-top:40px}.app-shell{grid-template-columns:1fr;min-height:0}.app-side{display:none}.app-content{padding:15px}.hero-preview-grid{grid-template-columns:1fr;min-height:0}.hero-preview-grid .preview-panel:last-child{grid-column:auto}.map-mini{height:145px}.section{padding:72px 0}.section-head{margin-bottom:28px}.section-head h2{font-size:clamp(29px,7.8vw,40px)}.section-head p{font-size:14px}.asset-compare{grid-template-columns:1fr}.asset-panel-body{padding:12px}.asset-diagram{height:auto;min-height:290px}.asset-network{grid-template-columns:1fr;gap:5px}.asset-arrow .desktop-arrow{display:none}.asset-arrow .mobile-arrow{display:block}.asset-arrow small{white-space:normal}.asset-reuse{margin-top:16px}.asset-callouts{grid-template-columns:1fr}.feature-index{grid-template-columns:1fr;gap:8px}.feature{grid-template-columns:1fr;gap:23px;padding:48px 0}.feature.reverse .feature-copy,.feature.reverse .feature-visual{order:initial}.feature-copy h3{font-size:31px}.feature-visual{padding:15px}.support-grid{grid-template-columns:1fr}.support-card{min-height:0}.case-panel{padding:20px}.work-flow{grid-template-columns:1fr;gap:20px}.work-step{min-height:0}.work-step:not(:last-child)::after{top:auto;bottom:-26px;right:calc(50% - 11px);transform:rotate(90deg)}.governance-diagram{padding:15px}.governance-lanes{grid-template-columns:1fr;gap:8px}.lane-name{padding:9px 12px}.lane-flow{flex-direction:column;gap:5px}.lane-box{padding:10px 12px}.lane-box small{margin-top:2px}.lane-flow .flow-arrow{transform:rotate(90deg)}.diagram-divider{margin:9px 0 9px 22px;height:18px}.start-grid{grid-template-columns:1fr 1fr}.price-card{align-items:start;flex-direction:column}.price-card strong{font-size:31px}.contact{padding:70px 0}}
+    @media(max-width:420px){.start-grid{grid-template-columns:1fr}.hero h1{font-size:clamp(25px,7vw,29px);line-height:1.4}.hero .btn{width:100%}.hero-actions{flex-direction:column}.feature-visual{padding:11px}.visual-inner{padding:12px}.harness-table{font-size:9px}.harness-table th,.harness-table td{padding:8px 3px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+    /* Atlas LP visual language: the existing sections, copy, links and diagrams stay in place. */
+    body{font-family:Inter,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.75}
+    html{scroll-padding-top:100px}
+    .eyebrow{color:#6366b5;font-size:11px;font-weight:700;letter-spacing:.14em}
+    .eyebrow::before{width:14px;height:1px}
+    .section{padding:112px 0;border-top:1px solid #f0f0f4}
+    .section-head{margin-bottom:52px}
+    .section-head h2,.contact h2{font-family:var(--display);font-weight:400;letter-spacing:-.055em}
+    .section-head h2{font-size:clamp(34px,4vw,48px);line-height:1.45}
+    .section-head p{color:#666;font-size:16px;line-height:1.9}
+    .btn{min-height:47px;padding:11px 23px;border:1px solid #dedee5;border-radius:999px;font-size:13px;font-weight:600;box-shadow:none;transition:transform .2s,box-shadow .2s,background .2s}
+    .btn:hover{box-shadow:0 9px 20px rgba(30,30,44,.1)}
+    .btn.primary,.nav .btn.primary{background:#202027;border-color:#202027;color:#fff}
+    .btn.primary:hover,.nav .btn.primary:hover{background:#3c3b45}
+    .btn .arrow{font-size:17px;font-weight:400}
+    .nav{width:min(1120px,calc(100% - 40px));height:64px;margin:15px auto -79px;top:15px;border:1px solid rgba(230,232,242,.92);border-radius:999px;background:rgba(255,255,255,.9);box-shadow:0 12px 34px rgba(45,42,68,.07)}
+    .nav-inner{width:100%;padding:0 20px}
+    .brand{gap:7px;color:#181925;font-size:15px;font-weight:800;letter-spacing:-.035em}
+    .brand-mark{width:32px;height:32px;border-radius:9px;transform:none;background:linear-gradient(135deg,#141532,#3f238d)}
+    .brand-mark::after{content:"✦";color:#fff;position:absolute;inset:0;display:grid;place-items:center;transform:none;font-size:22px}
+    .nav-links{gap:22px;color:#585963;font-size:12px;font-weight:600}
+    .nav-links a:hover{color:var(--blue)}
+    .nav .btn{min-height:38px;padding:8px 17px;font-size:11px}
+    .mobile-nav summary{color:#24242b;border-radius:50%}
+    .mobile-nav nav{border-radius:18px;box-shadow:0 15px 40px rgba(30,30,44,.12)}
+    .hero{padding:163px 0 103px;background:linear-gradient(to bottom,transparent 0,#fff 720px),var(--field)}
+    .hero::before,.hero::after{content:"";position:absolute;display:block;width:155px;height:170px;border:1px solid rgba(255,255,255,.86);border-radius:22px;box-shadow:0 15px 34px rgba(40,35,81,.09);background-color:#f8faff;background-image:url("./assets/character-design-reference-v6.png");background-size:1039.5px 741.3px;background-repeat:no-repeat;pointer-events:none;opacity:.98}
+    .hero::before{left:max(1%,calc((100vw - 1370px)/2));top:190px;background-position:-280px -374.5px}
+    .hero::after{right:max(1%,calc((100vw - 1370px)/2));top:205px;width:140px;background-position:-427px -374.5px}
+    .hero .eyebrow{color:#555568}
+    .hero h1{max-width:960px;margin-top:25px;font-family:var(--display);font-size:clamp(48px,5.8vw,74px);font-weight:400;line-height:1.34;letter-spacing:-.065em}
+    .hero h1 span{background:none;color:inherit}
+    .hero-lead{max-width:740px;margin-top:26px;color:#60616b;font-size:15px;line-height:2}
+    .hero-actions{gap:10px;margin-top:29px}
+    .hero-demo.app-window{margin-top:84px;padding:43px 43px 0;border:0;border-radius:30px;background:var(--field);box-shadow:none;overflow:hidden}
+    .hero-demo .app-top{height:43px;border:1px solid #e5e6ef;border-bottom:0;border-radius:17px 17px 0 0;background:#fbfbfd}
+    .hero-demo .app-shell{border:1px solid #e5e6ef;border-radius:0 0 17px 17px;background:#fff;box-shadow:0 16px 45px rgba(46,40,83,.1)}
+    .app-side{background:#fafafc}
+    .app-side div.item.active{background:#eeedfe;color:#3f238d}
+    .app-content-header h3,.preview-panel h4{color:#202027}
+    .preview-panel{border-color:#e8e8ee;border-radius:12px}
+    .map-mini,.map-large{background:radial-gradient(circle at 24% 25%,#f9ecf2,transparent 29%),radial-gradient(circle at 72% 60%,#eeedfe,transparent 41%),#fcfcff}
+    .mini-flow span{background:#eeedfe;color:#504d93}
+    .mini-flow span:nth-of-type(2){background:#fcece6;color:#90654f}
+    .mini-flow span:nth-of-type(3){background:#e1f5ef;color:#397866}
+    .asset-compare{gap:20px}
+    .asset-panel{border-color:#dfe1e9;border-radius:20px;background:#f7f7fa}
+    .asset-panel.future{border-color:#dcd8fc;background:#f4f2ff}
+    .asset-panel-head{background:#ececf2}
+    .asset-panel.future .asset-panel-head,.asset-panel.future .asset-summary,.asset-hub{background:#4934d7}
+    .asset-panel-head h3{font-weight:700}
+    .asset-diagram{border-color:#d6d9e7}
+    .asset-panel.future .asset-diagram{border-color:#dedafb}
+    .asset-arrow,.asset-reuse{color:#513bdc}
+    .asset-chips span{background:#725ee8}
+    .feature-index{gap:10px;margin-bottom:20px}
+    .feature-index a{min-height:58px;border-color:#e8e8ee;border-radius:999px;font-weight:600;background:#fff;transition:background .2s,border-color .2s}
+    .feature-index a:hover{background:#f4f2ff;border-color:#dcd5fa}
+    .feature-index span{color:#6c3bff}
+    .feature{gap:72px;padding:96px 0}
+    .feature-copy .number{color:#6366b5;font-weight:700}
+    .feature-copy h3{font-family:var(--display);font-weight:400;font-size:clamp(31px,3.35vw,43px);line-height:1.45;letter-spacing:-.055em}
+    .feature-copy .one-line{color:#3f238d;font-size:16px;font-weight:600}
+    .feature-copy p{font-size:14px;line-height:1.9}
+    .before-after b{border-radius:999px;padding:4px 9px}
+    .feature-visual{padding:32px;border:0;border-radius:29px;background:var(--field);box-shadow:none}
+    .visual-window{border-color:#e6e6ee;border-radius:16px;box-shadow:0 14px 34px rgba(37,34,70,.09)}
+    .visual-bar{background:#fcfcfe}
+    .map-node,.graph-node{border-color:#dcdaf4}
+    .graph-node{background:#f6f4ff}
+    .policy-row{background:#f7f6fd}
+    .support-grid{gap:14px}
+    .support-card{min-height:224px;padding:26px;border-color:#e8e8ee;border-radius:19px;box-shadow:0 8px 24px rgba(30,30,44,.025)}
+    .support-icon{border-radius:11px;color:#6047cc}
+    .support-card h3{color:#25252c}
+    .support-card p{line-height:1.75}
+    .case-tabs button{padding:9px 18px;border-color:#e4e4eb;color:#595a63;font-weight:600}
+    .case-tabs button[aria-selected="true"]{background:#202027;border-color:#202027}
+    .case-panel{border-color:#e8e8ee;border-radius:23px;box-shadow:0 16px 45px rgba(30,30,44,.045)}
+    .case-panel h3{font-family:var(--display);font-size:28px;font-weight:400;letter-spacing:-.04em}
+    .work-step{background:#fafafc;border-color:#e6e6ee;border-radius:13px}
+    .work-step:nth-child(2){background:#f5f2ff}
+    .work-step:nth-child(3){background:#eff8f4}
+    .work-step:nth-child(4){background:#eef6fa}
+    .work-step:not(:last-child)::after{color:#6f5bd5}
+    .governance-diagram{border-color:#e8e8ee;border-radius:23px;box-shadow:0 15px 42px rgba(30,30,44,.045)}
+    .lane-name{background:#eeedfe;color:#5145a0}
+    .lane-box{border-color:#e4e5ee;background:#fcfcfe}
+    .lane-box.ai{background:#f4f2ff}
+    .lane-box.human{background:#eff8f4}
+    .lane-box.alert{background:#fff5ee}
+    .governance-callout{background:#f7f6fd}
+    .start-step{border-color:#e8e8ee;border-radius:17px;padding:24px}
+    .start-step b{color:#6c3bff}
+    .price-card{border-color:#e8e8ee;border-radius:21px;padding:38px;background:linear-gradient(110deg,#fff 35%,#f6f3ff)}
+    .price-card strong{font-weight:600;letter-spacing:-.045em}
+    .faq-list summary{font-weight:600}
+    .contact{padding:105px 0 112px;background:linear-gradient(to bottom,rgba(255,255,255,.04),#fff 100%),var(--field);color:#181925}
+    .contact h2{font-size:clamp(37px,4.8vw,60px);line-height:1.42}
+    .contact p{color:#5f606b}
+    .contact .btn{border:1px solid #d9d9e2;color:#202027;background:#fff}
+    .contact .btn:first-of-type{background:#202027;border-color:#202027;color:#fff}
+    .contact-note{color:#777780!important}
+    footer{background:#fff;border-top:1px solid #ededf2;color:#8b8b95}
+    @media(max-width:1080px){.hero::before,.hero::after{width:133px;height:146px;top:225px;opacity:.8;background-size:891px 635.4px}.hero::before{left:0;background-position:-240px -321px}.hero::after{right:0;width:120px;background-position:-366px -321px}}
+    @media(max-width:900px){.hero::before,.hero::after{display:none}.nav{width:calc(100% - 30px)}.feature{gap:32px}}
+    @media(max-width:900px){.asset-benefits ul{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    @media(max-width:680px){
+      html{scroll-padding-top:140px}
+      .nav{height:111px;top:8px;margin:8px auto -119px;border-radius:25px}
+      .nav-inner{padding:10px 14px}
+      .brand{font-size:14px}.brand-mark{width:30px;height:30px}
+      .nav .btn{min-height:36px}
+      .hero{padding:178px 0 68px}
+      .hero h1{font-size:clamp(36px,9vw,48px);line-height:1.4}
+      .hero-lead{font-size:14px;line-height:1.9}
+      .hero-demo.app-window{margin-top:46px;padding:15px 15px 0;border-radius:20px}
+      .section{padding:78px 0}
+      .section-head{margin-bottom:33px}
+      .section-head h2{font-size:clamp(32px,8vw,41px)}
+      .feature{padding:58px 0}
+      .feature-copy h3{font-size:clamp(31px,7.8vw,39px)}
+      .feature-visual{padding:16px;border-radius:20px}
+      .case-panel h3{font-size:25px}
+      .contact{padding:78px 0 88px}
+      .asset-benefits{padding:14px}
+      .asset-benefits ul{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .asset-benefits li{min-height:72px;font-size:11px}
+      .asset-benefits li:last-child{grid-column:1/-1}
+    }
+    @media(max-width:420px){.hero h1{font-size:clamp(32px,8.2vw,36px)}.hero-demo.app-window{padding:10px 10px 0}.feature-visual{padding:11px}}
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="Skill Manager トップ"><span class="brand-mark" aria-hidden="true"></span>Skill Manager</a>
+      <nav class="nav-links" aria-label="ページ内ナビゲーション"><a href="#concept">仕組み</a><a href="#features">3つの機能</a><a href="#cases">活用例</a><a href="#governance">運用と確認</a></nav>
+      <details class="mobile-nav"><summary aria-label="ページ内メニューを開く">☰</summary><nav aria-label="モバイルのページ内ナビゲーション"><a href="#concept">仕組み</a><a href="#features">3つの機能</a><a href="#support">その他の機能</a><a href="#cases">活用例</a><a href="#governance">運用と確認</a><a href="#start">導入の流れ</a></nav></details>
+      <div class="nav-actions"><a class="btn" href="https://skill-manager-lp.hbtatsu.workers.dev/request.html?type=material">資料請求 <span class="arrow" aria-hidden="true">↗</span></a><a class="btn primary" href="https://skill-manager-lp.hbtatsu.workers.dev/request.html?type=demo">デモを依頼 <span class="arrow" aria-hidden="true">↗</span></a></div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap">
+        <div class="hero-copy">
+          <span class="eyebrow">Skill Manager / LP構成案</span>
+          <h1 id="hero-title">一人のAI活用を、<br><span>みんなが使える仕事の型に。</span></h1>
+          <p class="hero-lead">誰かが見つけたAIの使い方を、みんなが使える仕事の型へ。Skill Managerは、Skillの可視化、仕事の流れづくり、承認と運用をひとつにつなぎます。</p>
+          <div class="hero-actions"><a class="btn primary" href="https://skill-manager-lp.hbtatsu.workers.dev/request.html?type=demo">デモで見てみる <span class="arrow" aria-hidden="true">↗</span></a><a class="btn" href="https://skill-manager-lp.hbtatsu.workers.dev/request.html?type=material">資料を受け取る <span class="arrow" aria-hidden="true">↗</span></a></div>
+        </div>
+        <figure class="hero-demo app-window" aria-label="Skill Managerの3機能をまとめた説明用画面">
+          <div class="app-top"><i class="app-dot"></i><i class="app-dot"></i><i class="app-dot"></i><strong>Skill Manager / チームの仕事</strong></div>
+          <div class="app-shell">
+            <aside class="app-side" aria-hidden="true"><p class="side-title">WORKSPACE</p><div class="item">ホーム</div><div class="item active">Skillsマップ</div><div class="item">ロジック作成</div><div class="item">レビュー</div><div class="item">組織の設定</div></aside>
+            <div class="app-content">
+              <div class="app-content-header"><div><h3>チームのAI活用を、ひとつの画面で</h3><p>探す → 組み立てる → 確かめて広げる</p></div><span class="demo-pill">説明用イメージ</span></div>
+              <div class="hero-preview-grid">
+                <div class="preview-panel"><h4>01｜Skillsマップ</h4><div class="map-mini" aria-hidden="true"><b>提案の構成</b><b>情報を整理</b><b>定例レポート</b><b>確認ルール</b></div></div>
+                <div class="preview-panel"><h4>02｜グラフでロジック作成</h4><div class="preview-sub">作業の順番と人の確認地点をつなぐ</div><div class="mini-flow" aria-hidden="true"><span>情報を受け取る</span><i>→</i><span>AIが整理する</span><i>→</i><span>人が確認する</span></div></div>
+                <div class="preview-panel"><h4>03｜組織ハーネス設計</h4><div class="preview-sub">使う範囲と承認の流れ</div><div class="approval-list" aria-hidden="true"><div><em></em>公開前にレビュー</div><div><em></em>使える範囲を設定</div><div><em></em>変更履歴を確認</div></div></div>
+              </div>
+            </div>
+          </div>
+        </figure>
+        <p class="demo-caption">※ 画面は構想を含むワイヤーフレームです。製品は開発中で、機能・表示・提供時期は変更される場合があります。</p>
+      </div>
+    </section>
+
+    <section id="concept" class="section" aria-labelledby="concept-title">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">個人から組織へ</span><h2 id="concept-title">個人のAI化が、<br>「組織のAI資産」になります</h2><p>個人の工夫を、確認済みのSkillとして組織で一元管理。必要な人が探して使える状態にし、チームのAI活用を広げます。</p></div>
+        <div class="asset-compare">
+          <article class="asset-panel">
+            <div class="asset-panel-head"><span>AS-IS ／ 属人型（攻略サイト方式）</span><h3>伝える人がいないと、手順も途切れる</h3></div>
+            <div class="asset-panel-body">
+              <div class="asset-diagram" role="img" aria-label="AI先駆者からメンバーへ手順を伝えても、伝わらない人がいて、メンバー同士の工夫もつながらない図">
+                <div class="asset-person asset-origin"><b>AI先駆者</b><small>社内で最初にAI化</small></div>
+                <div class="asset-route-labels" aria-hidden="true"><span>口頭・文書で伝達</span><span>伝わらない</span><span>口頭・文書で伝達</span></div>
+                <div class="asset-members"><div class="asset-person"><b>メンバーA</b><small>独自にAI化</small></div><div class="asset-person missing"><b>メンバーB</b><small>習得できない</small></div><div class="asset-person"><b>メンバーC</b><small>独自にAI化</small></div></div>
+                <div class="asset-disconnect">メンバー同士の工夫もつながりにくい</div>
+              </div>
+              <div class="asset-callouts"><div><b>先駆者の課題</b>教える時間が必要で、知見が本人の頭の中に残りやすい。</div><div><b>メンバーの課題</b>どこまで再現できたか分からず、毎回ゼロから試す。</div></div>
+            </div>
+          </article>
+          <article class="asset-panel future">
+            <div class="asset-panel-head"><span>TO-BE ／ 資産型（セーブデータ方式）</span><h3>誰かのSkillから、はじめられる</h3></div>
+            <div class="asset-panel-body">
+              <div class="asset-diagram" role="img" aria-label="先駆者が確認済みのSkillを登録し、別チームのメンバーや新しいAIがSkill基盤から同じ手順を利用する図">
+                <div class="asset-network">
+                  <div class="asset-person"><b>先駆者</b><small>業務をAI化した人</small></div>
+                  <div class="asset-arrow" aria-hidden="true"><small>登録</small><span class="desktop-arrow">→</span><span class="mobile-arrow">↓</span></div>
+                  <div class="asset-hub"><b>Skill基盤</b><small>人が確認・登録したSkillが残る</small><div class="asset-chips"><span>Skill</span><span>Skill</span><span>Skill</span></div></div>
+                  <div class="asset-arrow" aria-hidden="true"><small>呼び出す</small><span class="desktop-arrow">→</span><span class="mobile-arrow">↓</span></div>
+                  <div class="asset-person"><b>新しいAI</b><small>登録済みSkillを活用</small></div>
+                </div>
+                <div class="asset-reuse"><span aria-hidden="true">↓</span> 別チームにも共有<div class="asset-person"><b>別チームのメンバー</b><small>同じ手順から始められる</small></div></div>
+              </div>
+              <div class="asset-callouts"><div><b>① 仕事の型が残る</b>登録したSkillが、次の人の出発点になる。</div><div><b>② 新しい仕事に生かせる</b>既存のSkillを呼び出して組み合わせ、ゼロからやり直さない。</div></div>
+            </div>
+          </article>
+        </div>
+        <div class="asset-benefits" aria-labelledby="asset-benefits-title">
+          <h3 id="asset-benefits-title">一元管理による5つの効果</h3>
+          <ul>
+            <li><span aria-hidden="true">↗</span>Skillの再利用性向上</li>
+            <li><span aria-hidden="true">✓</span>品質の標準化</li>
+            <li><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2 20 5v6c0 5-3 8-8 11-5-3-8-6-8-11V5z"/><path d="m9 12 2 2 4-4"/></svg></span>安全な共有・ガバナンス</li>
+            <li><span aria-hidden="true">▤</span>運用コストの削減</li>
+            <li><span aria-hidden="true">✦</span>AI活用の最大化</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section soft" aria-labelledby="features-title">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">3つの主要機能</span><h2 id="features-title">Skillを見つけ、仕事を設計し、組織に広げる。</h2><p>Skillを見渡す。AIの仕事を組み立てる。組織のルールに沿って広げる。3つの機能で、個人の工夫をチームの仕事につなぎます。</p></div>
+        <div class="feature-index"><a href="#feature-map"><span>01</span> Skillsマップ ↗</a><a href="#feature-graph"><span>02</span> グラフでロジック作成 ↗</a><a href="#feature-harness"><span>03</span> 組織ハーネス設計 ↗</a></div>
+
+        <article id="feature-map" class="feature">
+          <div class="feature-copy"><span class="number">01 / SKILLS MAP</span><h3>Skillsマップ<br>チームのSkillを見渡す。</h3><div class="one-line">どこに、どんな仕事の型があるか分かる。</div><p>社内のSkillを分野ごとに並べ、前提や関連するSkillのつながりから探せます。別の部署で使われている工夫にも出会えます。</p><div class="before-after"><div><b>これまで</b><span>学び方もSkillの管理も、個人ごとにばらばら</span></div><div><b>これから</b><span>チームのSkillを分類し、使いたい型を見つけやすく</span></div></div></div>
+          <div class="feature-visual"><div class="visual-window"><div class="visual-bar"><strong>Skillsマップ</strong><span>分野別に表示</span></div><div class="visual-inner"><div class="filter-row"><span>すべて</span><span>営業</span><span>調査・分析</span><span>業務自動化</span></div><div class="map-large" aria-label="提案、情報整理、確認などのSkillの関係を示す図"><i class="map-line a"></i><i class="map-line b"></i><i class="map-line c"></i><span class="map-node a">営業</span><span class="map-node b">提案の構成</span><span class="map-node c">顧客情報の整理</span><span class="map-node d">定例レポート</span><span class="map-node e">数値の確認</span></div><p class="visual-help">分野・前提・関連をたどり、目的のSkillへ。</p></div></div></div>
+        </article>
+
+        <article id="feature-graph" class="feature reverse">
+          <div class="feature-copy"><span class="number">02 / VISUAL LOGIC BUILDER</span><h3>グラフでロジック作成<br>AIの仕事を組み立てる。</h3><div class="one-line">手順と確認地点を、目で見てそろえる。</div><p>入力、AIに任せる工程、条件による分岐、人が確かめる工程を図でつなぎます。担当者によって判断や品質が変わりやすい仕事も、同じ流れから始められます。</p><div class="before-after"><div><b>これまで</b><span>AIへの頼み方や確認方法が、担当者ごとに違う</span></div><div><b>これから</b><span>仕事の順番と判断基準を見える形で共有</span></div></div></div>
+          <div class="feature-visual"><div class="visual-window"><div class="visual-bar"><strong>ロジックエディタ</strong><span>営業提案の構成づくり</span></div><div class="visual-inner"><div class="graph-flow" role="img" aria-label="顧客条件を入力し、AIが課題を整理。不足があれば人が確認し、なければ次へ進む。AIが提案の下書きを作り、確認点つきで出力する流れ"><div class="graph-row"><div class="graph-node">入力<br>顧客条件・資料</div><span class="graph-arrow" aria-hidden="true">→</span><div class="graph-node orange">AIが整理<br>課題を抽出</div><span class="graph-arrow" aria-hidden="true">→</span><div class="graph-node">条件分岐<br>不足を確認</div></div><div class="graph-down" aria-hidden="true">↓</div><div class="graph-branches"><div class="graph-node green">不足あり<br>人が根拠・数値を確認</div><div class="graph-node">不足なし<br>次の工程へ</div></div><div class="graph-down" aria-hidden="true">↓</div><div class="graph-row"><div class="graph-node orange">AIが構成<br>提案の下書き</div><span class="graph-arrow" aria-hidden="true">→</span><div class="graph-node green">出力<br>確認点つき</div></div></div><p class="visual-help">グラフ＝作業のつながりを示す図。専門知識なしでも流れを追えます。</p></div></div></div>
+        </article>
+
+        <article id="feature-harness" class="feature">
+          <div class="feature-copy"><span class="number">03 / ORGANIZATION HARNESS</span><h3>組織ハーネス設計<br>ルールを決めて広げる。</h3><div class="one-line">誰が使い、誰が確かめるかを決められる。</div><p>組織ハーネスとは、AIに任せる範囲、接続してよい先、公開前のレビューなどをまとめた運用上の枠組みです。下書きからレビュー、公開までを同じ流れで管理します。</p><div class="before-after"><div><b>これまで</b><span>AI活用を広げたいが、統制の決め方が分からない</span></div><div><b>これから</b><span>権限と承認の流れを設定し、確認してから配る</span></div></div></div>
+          <div class="feature-visual"><div class="visual-window"><div class="visual-bar"><strong>組織ハーネス設計</strong><span>組織の設定</span></div><div class="visual-inner"><table class="harness-table" aria-label="役割ごとの権限設定例"><thead><tr><th>操作</th><th>個人</th><th>チーム</th><th>管理者</th></tr></thead><tbody><tr><td>閲覧</td><td class="check">●</td><td class="check">●</td><td class="check">●</td></tr><tr><td>編集</td><td class="check">●</td><td class="check">●</td><td class="check">●</td></tr><tr><td>承認</td><td class="dash">—</td><td class="check">●</td><td class="check">●</td></tr><tr><td>公開</td><td class="dash">—</td><td class="dash">—</td><td class="check">●</td></tr></tbody></table><div class="policy-row"><strong>組織ルールの例</strong>承認が必要なSkillは、レビューを終えてから公開する。</div></div></div></div>
+        </article>
+        <p class="section-note">※ 図は機能の考え方を示す構想画面です。権限項目・操作名・提供範囲は開発中のため変わる可能性があります。</p>
+      </div>
+    </section>
+
+    <section id="support" class="section" aria-labelledby="support-title">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">その他の機能</span><h2 id="support-title">組織のAI活用を支えるその他機能</h2><p>Skillを探すところから、試用、確認、公開後の管理まで。主要3機能を支える機能を紹介します。</p></div>
+        <div class="support-grid">
+          <article class="support-card"><span class="support-icon" aria-hidden="true">⌕</span><h3>Skillを探して選ぶ</h3><p>目的・カテゴリ・作成者で絞り込み、利用実績なども見ながら必要なSkillを探せます。</p><small>資料P37｜開発中の画面案</small></article>
+          <article class="support-card"><span class="support-icon" aria-hidden="true">↻</span><h3>版と配布状態を管理する</h3><p>公開する版や配布先を設定し、端末への同期状態をまとめて確認できます。</p><small>資料P34・38・41｜開発中の画面案</small></article>
+          <article class="support-card"><span class="support-icon" aria-hidden="true">✓</span><h3>実行結果をレビューする</h3><p>工程ごとの結果、変更ファイル、実行時間や推定コストを見て、確認すべき箇所へ戻れます。</p><small>資料P38｜開発中の画面案</small></article>
+          <article class="support-card"><span class="support-icon" aria-hidden="true">▤</span><h3>公開前の状態を追う</h3><p>下書きからレビュー、承認、公開までの状態と、公開前に何を確認したかを追えます。</p><small>資料P34・41／元HTML｜開発中の構想</small></article>
+          <article class="support-card"><span class="support-icon" aria-hidden="true">◇</span><h3>権限と接続先を決める</h3><p>閲覧・編集・承認・公開の担当と、AIが接続できる外部サービスの範囲を設定できます。</p><small>資料P33・34／元HTML｜開発中の構想</small></article>
+          <article class="support-card"><span class="support-icon" aria-hidden="true">↶</span><h3>承認済みの版を配り、戻す</h3><p>レビューを通った版を配布できます。問題が見つかったときは、履歴を確認して前の版に戻せます。</p><small>資料P41／元HTML｜開発中の構想</small></article>
+          <article class="support-card"><span class="support-icon" aria-hidden="true">↗</span><h3>Claude・Codexで試す</h3><p>選んだSkillをClaudeやCodexで試し、その実行結果を確認できます。</p><small>資料P38｜開発中の画面案</small></article>
+          <article class="support-card"><span class="support-icon" aria-hidden="true">✉</span><h3>改善依頼・問い合わせを受ける</h3><p>利用者から改善依頼や問い合わせを受け付け、Skillの見直しに生かせます。</p><small>元HTML｜開発中の構想</small></article>
+          <article class="support-card"><span class="support-icon" aria-hidden="true">◎</span><h3>秘密情報の参照を管理する</h3><p>認証情報などを参照できる人やSkillの範囲を、組織で管理できます。</p><small>元HTML｜開発中の構想</small></article>
+          <article class="support-card"><span class="support-icon" aria-hidden="true">!</span><h3>危険な操作を確認する</h3><p>影響の大きい操作を承認制にし、実行後の記録を確認できるようにする構想です。</p><small>資料P40／元HTML｜安全対策の構想</small></article>
+        </div>
+        <p class="section-note">※ 上記は資料と既存ワイヤーフレームにある機能・画面案を整理したものです。正式な提供範囲や開始時期を示すものではありません。</p>
+      </div>
+    </section>
+
+    <section id="cases" class="section soft" aria-labelledby="cases-title">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">仕事の変化</span><h2 id="cases-title">いい仕事の進め方が、チームの当たり前になる。</h2><p>営業提案も、定例レポートも、業務の引き継ぎも。成果物だけでなく、考える順番と人が確かめる地点を共有できます。</p></div>
+        <div class="case-tabs" role="tablist" aria-label="活用例"><button type="button" role="tab" aria-controls="case-sales" aria-selected="true" id="tab-sales">営業提案</button><button type="button" role="tab" aria-controls="case-report" aria-selected="false" id="tab-report" tabindex="-1">定例レポート</button><button type="button" role="tab" aria-controls="case-handoff" aria-selected="false" id="tab-handoff" tabindex="-1">業務の引き継ぎ</button></div>
+        <article class="case-panel" id="case-sales" role="tabpanel" aria-labelledby="tab-sales"><h3>営業提案｜よい提案の作り方を引き継ぐ</h3><p>提案書だけを渡すのではなく、どの条件を見て何を確かめるかまで共有します。</p><div class="work-flow"><div class="work-step"><span class="step-no">01 / 入力</span><h4>顧客条件を渡す</h4><p>課題、目的、参照してよい資料をそろえる。</p></div><div class="work-step"><span class="step-no">02 / AIの工程</span><h4>提案の骨子を作る</h4><p>情報を整理し、構成案と根拠を並べる。</p></div><div class="work-step"><span class="step-no">03 / 人の確認</span><h4>数字と条件を確かめる</h4><p>出典、顧客条件との一致、未確認事項を見る。</p></div><div class="work-step"><span class="step-no">04 / 成果物</span><h4>確認点つきの提案案</h4><p>次の担当者も同じ順番から進められる。</p></div></div><div class="case-outcome">仕事の型として残す：構成の順番・判断基準・人が確認する箇所</div></article>
+        <article class="case-panel" id="case-report" role="tabpanel" aria-labelledby="tab-report" hidden><h3>定例レポート｜見る数字と確認の順番をそろえる</h3><p>担当者ごとに集計の観点が変わりやすい業務を、共通の流れにします。</p><div class="work-flow"><div class="work-step"><span class="step-no">01 / 入力</span><h4>対象期間とデータ</h4><p>確認する指標と参照先を指定する。</p></div><div class="work-step"><span class="step-no">02 / AIの工程</span><h4>集計・変化を整理</h4><p>前回との違いと気づきをまとめる。</p></div><div class="work-step"><span class="step-no">03 / 人の確認</span><h4>事実と推測を分ける</h4><p>数値の出典と例外を確認する。</p></div><div class="work-step"><span class="step-no">04 / 成果物</span><h4>読みやすい定例報告</h4><p>同じ観点で次回も比較できる。</p></div></div><div class="case-outcome">仕事の型として残す：指標・集計手順・例外の確認方法</div></article>
+        <article class="case-panel" id="case-handoff" role="tabpanel" aria-labelledby="tab-handoff" hidden><h3>業務の引き継ぎ｜手順と相談先を一緒に渡す</h3><p>資料はあるのに進められない状態を減らし、迷う箇所を見えるようにします。</p><div class="work-flow"><div class="work-step"><span class="step-no">01 / 入力</span><h4>依頼内容を受け取る</h4><p>対象、期限、前提条件を整理する。</p></div><div class="work-step"><span class="step-no">02 / AIの工程</span><h4>手順を案内する</h4><p>承認された順番で次の作業を示す。</p></div><div class="work-step"><span class="step-no">03 / 人の確認</span><h4>例外を相談する</h4><p>判断が必要なら、決めた担当者へ渡す。</p></div><div class="work-step"><span class="step-no">04 / 成果物</span><h4>引き継いだ業務を完了</h4><p>判断した理由も次回に残せる。</p></div></div><div class="case-outcome">仕事の型として残す：手順・確認する条件・相談先</div></article>
+        <p class="section-note">※ 3例は利用イメージであり、導入実績や効果を示すものではありません。</p>
+      </div>
+    </section>
+
+    <section id="governance" class="section" aria-labelledby="governance-title">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">運用の流れ</span><h2 id="governance-title">任せるところも、確かめるところも。自分たちで決められる。</h2><p>AIが進める作業と、人が判断する箇所を分けて設計。公開前と利用後にも、確認する地点を置けます。</p></div>
+        <div class="governance-diagram" role="img" aria-label="管理者が権限と接続先を設定し、現場がSkillの手順を作成。人がレビューして公開。実行後は記録を確認して必要なら前の版を確認する流れ">
+          <div class="governance-lanes"><div class="lane-name">組織の設定<small>情報システム・管理者</small></div><div class="lane-flow"><div class="lane-box">使える人を決める<small>閲覧・編集・公開の権限</small></div><span class="flow-arrow" aria-hidden="true">→</span><div class="lane-box">接続先を決める<small>外部サービスの範囲</small></div><span class="flow-arrow" aria-hidden="true">→</span><div class="lane-box alert">承認者を決める<small>公開前に人が確認</small></div></div></div>
+          <div class="diagram-divider" aria-hidden="true"></div>
+          <div class="governance-lanes"><div class="lane-name">仕事をつくる<small>現場・AI</small></div><div class="lane-flow"><div class="lane-box">下書き<small>作業の手順を組む</small></div><span class="flow-arrow" aria-hidden="true">→</span><div class="lane-box ai">AIに任せる<small>整理・下書きなど</small></div><span class="flow-arrow" aria-hidden="true">→</span><div class="lane-box human">人が確かめる<small>根拠・例外・内容</small></div></div></div>
+          <div class="diagram-divider" aria-hidden="true"></div>
+          <div class="governance-lanes"><div class="lane-name">配る・追う<small>承認者・利用者</small></div><div class="lane-flow"><div class="lane-box human">レビュー・公開<small>確認した版を配る</small></div><span class="flow-arrow" aria-hidden="true">→</span><div class="lane-box">実行記録を確認<small>要確認の工程を探す</small></div><span class="flow-arrow" aria-hidden="true">→</span><div class="lane-box alert">必要なら前の版へ<small>変更履歴を見て判断</small></div></div></div>
+          <div class="governance-callout"><strong>ポイント：</strong>AIがすべて決めるのではなく、組織が「任せる範囲」と「人が確かめる地点」を先に決める設計です。</div>
+        </div>
+        <p class="section-note">※ 図は運用構想です。権限、レビュー、切り戻しの具体的な提供範囲は製品版でご確認ください。</p>
+      </div>
+    </section>
+
+    <section id="start" class="section soft" aria-labelledby="start-title"><div class="wrap"><div class="section-head"><span class="eyebrow">導入の進め方</span><h2 id="start-title">まずは、一つの仕事と小さなチームから。</h2><p>対象を決め、ルールを整え、実際に試してから広げる。最初から全社に配る必要はありません。</p></div><div class="start-grid"><div class="start-step"><b>01</b><h3>仕事を選ぶ</h3><p>繰り返しが多く、型を共有したい業務を決める。</p></div><div class="start-step"><b>02</b><h3>ルールを決める</h3><p>使う人、承認する人、接続してよい先を整理する。</p></div><div class="start-step"><b>03</b><h3>試して確かめる</h3><p>確認にかかった時間や差し戻し理由を見る。</p></div><div class="start-step"><b>04</b><h3>次のチームへ</h3><p>手応えを見て、展開する範囲を決める。</p></div></div></div></section>
+
+    <section id="pricing" class="section" aria-labelledby="pricing-title"><div class="wrap"><div class="section-head"><span class="eyebrow">料金の目安</span><h2 id="pricing-title">対象部門から、必要な人数で。</h2></div><div class="price-card"><div><h3>Skill Manager 月額利用料（資料記載の予定価格）</h3><p>管理者・利用者ともにアカウントが必要です。価格や提供条件は確定前です。</p></div><strong>10,000円 <small>/ 月・アカウント</small></strong></div><p class="section-note">※ 税区分、最低契約数、導入支援費などは個別確認事項です。資料P43を参照。</p></div></section>
+
+    <section id="faq" class="section soft" aria-labelledby="faq-title"><div class="wrap"><div class="section-head"><span class="eyebrow">よくある質問</span><h2 id="faq-title">検討の前に。</h2></div><div class="faq-list"><details><summary>ClaudeやCodexを入れ替える必要はありますか？</summary><p>Skill Managerは、ClaudeやCodexで使うSkillを組織として管理する構想です。対象ツールとの具体的な連携・提供範囲は、デモ時に確認できます。</p></details><details><summary>ファイルを共有するだけとは、何が違いますか？</summary><p>手順の内容だけでなく、分野や関連、仕事の流れ、レビュー状態、公開する版まで同じ運用の中で扱うことを目指しています。</p></details><details><summary>デモでは何を確認できますか？</summary><p>開発中の画面と、現在ご案内できる機能・提供時期をご確認いただけます。詳細は申込後にご案内します。</p></details></div></div></section>
+
+    <section id="contact" class="contact" aria-labelledby="contact-title"><div class="wrap"><h2 id="contact-title">あなたのチームの「いい仕事」を、<br>次の力に。</h2><p>最初に共有したい仕事の型を、一緒に見つけてみませんか。</p><a class="btn" href="https://skill-manager-lp.hbtatsu.workers.dev/request.html?type=demo">デモを依頼する <span class="arrow" aria-hidden="true">↗</span></a> <a class="btn" href="https://skill-manager-lp.hbtatsu.workers.dev/request.html?type=material">資料を受け取る <span class="arrow" aria-hidden="true">↗</span></a><p class="contact-note">開発中のため、ご案内できる範囲は個別にお伝えします。</p></div></section>
+  </main>
+
+  <footer><div class="wrap"><span>Skill Manager｜LPワイヤーフレーム改訂案</span><span>開発中のコンセプト・サンプル画面を含みます</span></div></footer>
+  <script>
+    (() => {
+      const tabs = [...document.querySelectorAll('[role="tab"]')];
+      const panels = tabs.map(tab => document.getElementById(tab.getAttribute('aria-controls')));
+      function selectTab(index, focus = false) {
+        tabs.forEach((tab, i) => {
+          const active = i === index;
+          tab.setAttribute('aria-selected', String(active));
+          tab.tabIndex = active ? 0 : -1;
+          panels[i].hidden = !active;
+        });
+        if (focus) tabs[index].focus();
+      }
+      tabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => selectTab(index));
+        tab.addEventListener('keydown', event => {
+          let next = index;
+          if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+          else if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+          else if (event.key === 'Home') next = 0;
+          else if (event.key === 'End') next = tabs.length - 1;
+          else return;
+          event.preventDefault();
+          selectTab(next, true);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
