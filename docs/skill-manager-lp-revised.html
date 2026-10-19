@@ -370,6 +370,14 @@
     @media(max-width:900px){.impact-layout{grid-template-columns:1fr}.operation-flow{grid-template-columns:1fr}}
     @media(max-width:680px){.learning-impact{padding:21px}.learning-impact-head{display:block}.estimate-tag{display:inline-block;margin-top:13px}.learning-bars{gap:6px;margin-top:25px}.learning-bar-track{height:180px}.learning-bar-item>strong{font-size:14px}.learning-bar-item>b{font-size:10px}.learning-bar-item small{font-size:9px}.impact-chart,.impact-result{padding:20px}.impact-chart-top{display:block}.impact-chart-top span{display:block;margin-top:4px}.operation-lane{padding:20px}.start-step:not(:last-child)::after{display:none}}
     @media(max-width:420px){.learning-bar-track{height:135px}.learning-multipliers{gap:6px}.learning-multipliers span{font-size:10px}.impact-result>div{display:block}.impact-result>div strong{display:block}}
+    .feature-copy h3 .feature-name,.feature-copy h3 .feature-promise{display:block}
+    .feature-copy h3 .feature-promise{font-size:.76em;line-height:1.45;letter-spacing:-.04em;margin-top:7px}
+    .learning-impact-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);align-items:center;gap:26px;position:relative}
+    .learning-art{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:16px;border:1px solid #e5e1f5}
+    .learning-impact-head .estimate-tag{grid-column:2;justify-self:end;margin-top:-16px}
+    .impact-result{justify-content:flex-start}
+    .impact-art{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:14px;border:1px solid #e5e1f5;margin-bottom:18px}
+    @media(max-width:680px){.learning-impact-head{grid-template-columns:1fr}.learning-impact-head .estimate-tag{grid-column:1;margin-top:-8px}}
   </style>
 </head>
 <body>
@@ -453,7 +461,7 @@
           </ul>
         </div>
         <div class="learning-impact" aria-labelledby="learning-impact-title">
-          <div class="learning-impact-head"><div><span class="eyebrow">組織で学ぶとどう変わる？</span><h3 id="learning-impact-title">組織で学習できると、<br>累乗的にAI化が進む。</h3><p>Skillを作るのは一度。個人ごとに使うよりも、組織で共有して繰り返し使うことで、削減時間が積み上がります。</p></div><span class="estimate-tag">試算値</span></div>
+          <div class="learning-impact-head"><div><span class="eyebrow">組織で学ぶとどう変わる？</span><h3 id="learning-impact-title">組織で学習できると、<br>累乗的にAI化が進む。</h3><p>Skillを作るのは一度。個人ごとに使うよりも、組織で共有して繰り返し使うことで、削減時間が積み上がります。</p></div><img class="learning-art" src="./assets/learning-network-higgsfield.png" alt="一つのSkillから多数のSkillへつながりが広がるイメージ" loading="lazy"><span class="estimate-tag">試算値</span></div>
           <div class="learning-bars" role="img" aria-label="Skill活用による月間の削減時間の試算。作った本人だけが使う場合は約5.8時間。23人がそれぞれ自分のSkillだけを使う場合は約130時間で約22倍。23人がSkillを共有し平均5名が利用する場合は約670時間で約115倍。">
             <div class="learning-bar-item"><strong>約5.8時間</strong><div class="learning-bar-track"><span class="learning-bar one"></span></div><b>作った本人だけが使う</b><small>1名 × 1 Skill</small></div>
             <div class="learning-bar-item"><strong>約130時間</strong><div class="learning-bar-track"><span class="learning-bar two"></span></div><b>全員が自分の分だけ使う</b><small>23名 × 各1 Skill（共有なし）</small></div>
@@ -471,17 +479,17 @@
         <div class="feature-index"><a href="#feature-map"><span>01</span> Skillsマップ ↗</a><a href="#feature-graph"><span>02</span> グラフでロジック作成 ↗</a><a href="#feature-harness"><span>03</span> 組織ハーネス設計 ↗</a></div>
 
         <article id="feature-map" class="feature">
-          <div class="feature-copy"><span class="number">01 / SKILLS MAP</span><h3>Skillsマップ<br>直感的に、使いたいSkillを探せる。</h3><div class="one-line">カテゴリを見れば、チームの得意が一目で分かる。</div><p>フォルダやファイル名を一つずつ調べる手間を減らします。営業、調査、業務自動化などのカテゴリからSkillを俯瞰し、関連する仕事の型までたどれます。</p><div class="before-after"><div><b>これまで</b><span>ファイルを開くまで、何のSkillがあるか分からない</span></div><div><b>これから</b><span>カテゴリから直感的に見つけ、すぐ活用できる</span></div></div></div>
+          <div class="feature-copy"><span class="number">01 / SKILLS MAP</span><h3><span class="feature-name">Skillsマップ</span><span class="feature-promise">直感的に、使いたいSkillを探せる。</span></h3><div class="one-line">カテゴリを見れば、チームの得意が一目で分かる。</div><p>フォルダやファイル名を一つずつ調べる手間を減らします。営業、調査、業務自動化などのカテゴリからSkillを俯瞰し、関連する仕事の型までたどれます。</p><div class="before-after"><div><b>これまで</b><span>組織内でどんなSkillが作られているのか把握できない</span></div><div><b>これから</b><span>俯瞰的に見て組織内のSkillを探すことができる</span></div></div></div>
           <div class="feature-visual"><div class="visual-window"><div class="visual-bar"><strong>Skillsマップ</strong><span>分野別に表示</span></div><div class="visual-inner"><div class="filter-row"><span>すべて</span><span>営業</span><span>調査・分析</span><span>業務自動化</span></div><div class="map-large" aria-label="提案、情報整理、確認などのSkillの関係を示す図"><i class="map-line a"></i><i class="map-line b"></i><i class="map-line c"></i><span class="map-node a">営業</span><span class="map-node b">提案の構成</span><span class="map-node c">顧客情報の整理</span><span class="map-node d">定例レポート</span><span class="map-node e">数値の確認</span></div><p class="visual-help">分野・前提・関連をたどり、目的のSkillへ。</p></div></div></div>
         </article>
 
         <article id="feature-graph" class="feature reverse">
-          <div class="feature-copy"><span class="number">02 / VISUAL LOGIC BUILDER</span><h3>グラフでロジック作成<br>長いmdファイルを読まなくても、仕事の流れが一目でわかる。</h3><div class="one-line">AIの工程も、人の確認も、図の上でつながる。</div><p>Skillの説明ファイルを読み解かなくても、入力、AIの処理、条件分岐、確認、出力の関係をグラフで把握できます。Claude Codeを開きながら、仕事の構造を確かめて作れます。</p><div class="before-after"><div><b>これまで</b><span>mdファイルを読まないと、手順の全体像がつかめない</span></div><div><b>これから</b><span>グラフで流れを見ながら、作成・改善できる</span></div></div></div>
+          <div class="feature-copy"><span class="number">02 / VISUAL LOGIC BUILDER</span><h3><span class="feature-name">グラフでロジック作成</span><span class="feature-promise">仕事の流れが一目でわかる。</span></h3><div class="one-line">AIの工程も、人の確認も、図の上でつながる。</div><p>Skillの説明ファイルを読み解かなくても、入力、AIの処理、条件分岐、確認、出力の関係をグラフで把握できます。Claude Codeを開きながら、仕事の構造を確かめて作れます。</p><div class="before-after"><div><b>これまで</b><span>mdファイルを読まないと、手順の全体像がつかめない</span></div><div><b>これから</b><span>グラフで流れを見ながら、作成・改善できる</span></div></div></div>
           <div class="feature-visual"><div class="visual-window"><div class="visual-bar"><strong>ロジックエディタ</strong><span>営業提案の構成づくり</span></div><div class="visual-inner"><div class="graph-flow" role="img" aria-label="顧客条件を入力し、AIが課題を整理。不足があれば人が確認し、なければ次へ進む。AIが提案の下書きを作り、確認点つきで出力する流れ"><div class="graph-row"><div class="graph-node">入力<br>顧客条件・資料</div><span class="graph-arrow" aria-hidden="true">→</span><div class="graph-node orange">AIが整理<br>課題を抽出</div><span class="graph-arrow" aria-hidden="true">→</span><div class="graph-node">条件分岐<br>不足を確認</div></div><div class="graph-down" aria-hidden="true">↓</div><div class="graph-branches"><div class="graph-node green">不足あり<br>人が根拠・数値を確認</div><div class="graph-node">不足なし<br>次の工程へ</div></div><div class="graph-down" aria-hidden="true">↓</div><div class="graph-row"><div class="graph-node orange">AIが構成<br>提案の下書き</div><span class="graph-arrow" aria-hidden="true">→</span><div class="graph-node green">出力<br>確認点つき</div></div></div><p class="visual-help">グラフ＝作業のつながりを示す図。専門知識なしでも流れを追えます。</p></div></div></div>
         </article>
 
         <article id="feature-harness" class="feature">
-          <div class="feature-copy"><span class="number">03 / ORGANIZATION HARNESS</span><h3>組織ハーネス設計<br>配り方のルールも、選んで設定。</h3><div class="one-line">何を決めればよいか、画面に沿って進められる。</div><p>配布先、使える人、公開前のレビューを順に選ぶだけ。社内に配るための設定を一から考え込まず、必要な確認を済ませてSkillを広げられます。</p><div class="before-after"><div><b>これまで</b><span>何をルール化すれば社内に配れるのか迷う</span></div><div><b>これから</b><span>画面の項目を選び、レビューして配布できる</span></div></div></div>
+          <div class="feature-copy"><span class="number">03 / ORGANIZATION HARNESS</span><h3><span class="feature-name">組織ハーネス設計</span><span class="feature-promise">配り方のルールも、選んで設定。</span></h3><div class="one-line">何を決めればよいか、画面に沿って進められる。</div><p>配布先、使える人、公開前のレビューを順に選ぶだけ。社内に配るための設定を一から考え込まず、必要な確認を済ませてSkillを広げられます。</p><div class="before-after"><div><b>これまで</b><span>何をルール化すれば社内に配れるのか迷う</span></div><div><b>これから</b><span>画面の項目を選び、レビューして配布できる</span></div></div></div>
           <div class="feature-visual"><div class="visual-window"><div class="visual-bar"><strong>組織ハーネス設計</strong><span>配布設定の例</span></div><div class="visual-inner"><div class="setup-progress"><span class="done">1 配布先</span><span class="done">2 権限</span><span>3 レビュー</span></div><div class="setup-card"><strong>どこに配りますか？</strong><div class="setup-options"><span class="selected">✓ 営業チーム</span><span>企画チーム</span><span>全社</span></div></div><div class="setup-card"><strong>誰が確認しますか？</strong><div class="setup-options"><span class="selected">✓ 管理者が承認</span><span>チーム責任者が承認</span></div></div><div class="setup-ready">設定を確認して、招待・配布へ →</div><p class="visual-help">画面は設定手順のイメージです。</p></div></div></div>
         </article>
         <p class="section-note">※ 図は機能の考え方を示す構想画面です。権限項目・操作名・提供範囲は開発中のため変わる可能性があります。</p>
@@ -516,7 +524,7 @@
             <svg viewBox="0 0 620 300" aria-hidden="true" focusable="false"><line x1="68" y1="244" x2="568" y2="244" class="chart-axis"/><line x1="68" y1="44" x2="68" y2="244" class="chart-axis"/><line x1="68" y1="65" x2="568" y2="216" class="chart-line"/><circle cx="68" cy="65" r="8" class="chart-point-start"/><circle cx="568" cy="216" r="8" class="chart-point-end"/><text x="68" y="45" class="chart-value">570時間</text><text x="568" y="195" text-anchor="end" class="chart-value">78.5時間</text><text x="68" y="278" class="chart-label">従来</text><text x="568" y="278" text-anchor="end" class="chart-label">AI Skill活用後</text></svg>
             <p>2つの状態を結んだ比較図です。時間の推移を示すものではありません。</p>
           </div>
-          <div class="impact-result"><span>所要時間の削減率</span><strong>約86<small>%</small></strong><p>全Skillを1回ずつ使う場合の所要時間の合計値から計算。</p><div><b>年間削減工数</b><strong>14,712時間</strong></div><div><b>年間効率化額</b><strong>6,266万円</strong></div></div>
+          <div class="impact-result"><img class="impact-art" src="./assets/time-reduction-higgsfield.png" alt="多くの作業を少ない時間で進められるイメージ" loading="lazy"><span>所要時間の削減率</span><strong>約86<small>%</small></strong><p>全Skillを1回ずつ使う場合の所要時間の合計値から計算。</p><div><b>年間削減工数</b><strong>14,712時間</strong></div><div><b>年間効率化額</b><strong>6,266万円</strong></div></div>
         </div>
       </div>
     </section>
