@@ -9,16 +9,14 @@
     },
     "Figma": {
       "type": "http",
-      "url": "https://mcp.figma.com/mcp",
-      "headers": {}
+      "url": "https://mcp.figma.com/mcp"
     },
     "codex": {
       "type": "stdio",
       "command": "codex",
       "args": [
         "mcp-server"
-      ],
-      "env": {}
+      ]
     },
     "ptengine": {
       "type": "http",
@@ -36,23 +34,19 @@
     },
     "mfc_ca": {
       "type": "http",
-      "url": "https://beta.mcp.developers.biz.moneyforward.com/mcp/ca/v3",
-      "headers": {}
+      "url": "https://beta.mcp.developers.biz.moneyforward.com/mcp/ca/v3"
     },
     "FigmaEdit": {
       "type": "http",
-      "url": "https://mcp.figma.com/mcp",
-      "headers": {}
+      "url": "https://mcp.figma.com/mcp"
     },
     "doop": {
       "type": "http",
-      "url": "https://doop.einja.net/mcp",
-      "headers": {}
+      "url": "https://doop.einja.net/mcp"
     },
     "plane": {
       "type": "http",
-      "url": "https://eenchow-task-force.einja.net/mcp",
-      "headers": {}
+      "url": "https://eenchow-task-force.einja.net/mcp"
     }
   }
 }
